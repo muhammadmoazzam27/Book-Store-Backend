@@ -1,22 +1,28 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const {connectDB} = require("./src/database/mongodb");
+const auth = require("./src/routes/auth");
 
 const app = express();
 
-const PORT = dotenv.PORT || 8000
+const PORT = process.env.PORT || 8000
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req,res)=>{
+connectDB();
+
+app.use("/api/auth", auth);
+
+app.get("/", (req, res) => {
     res.send(`A server is running on PORT ${PORT}`)
 })
 
-app.get("/health", (req,res)=>{
+app.get("/health", (req, res) => {
     res.send("A server health is good")
 })
 
-app.listen(PORT, (req,res)=>{
+app.listen(PORT, (req, res) => {
     console.log(`A server is running on PORT ${PORT}`)
 })
