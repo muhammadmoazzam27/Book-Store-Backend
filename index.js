@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { connectDB } = require("./src/database/mongodb");
 const auth = require("./src/routes/auth");
+const { checkCloudinaryConnection } = require("./src/database/cloudinary");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({
 app.use(express.json());
 
 connectDB();
+checkCloudinaryConnection();
 
 app.use("/api/auth", auth);
 
